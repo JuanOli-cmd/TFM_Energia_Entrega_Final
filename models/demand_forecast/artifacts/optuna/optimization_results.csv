@@ -1,0 +1,5 @@
+modelo,mae_cv,n_trials,best_params
+CatBoost (Optuna),249.6239348129487,150,"{'iterations': 468, 'depth': 8, 'learning_rate': 0.051080278799007846, 'l2_leaf_reg': 1.2734218709347624, 'bagging_temperature': 0.90353097894739, 'random_strength': 0.033181827930395716}"
+LightGBM (Optuna),257.63700055464045,150,"{'n_estimators': 466, 'max_depth': 12, 'learning_rate': 0.05675152114418038, 'subsample': 0.9725109412712609, 'colsample_bytree': 0.9335404317481355, 'min_child_samples': 11, 'reg_alpha': 0.1970466975744979, 'reg_lambda': 0.03957058976539516, 'num_leaves': 85}"
+XGBoost (Optuna),261.4034986604625,150,"{'n_estimators': 495, 'max_depth': 7, 'learning_rate': 0.06195310307342658, 'subsample': 0.8606232618736115, 'colsample_bytree': 0.8767778705854186, 'min_child_weight': 7, 'gamma': 0.24461168415632656, 'reg_alpha': 0.27527171042913967, 'reg_lambda': 1.1000416837458742}"
+Random Forest (Optuna),319.46723157210096,150,"{'n_estimators': 453, 'max_depth': 23, 'min_samples_split': 2, 'min_samples_leaf': 1, 'max_features': None}"

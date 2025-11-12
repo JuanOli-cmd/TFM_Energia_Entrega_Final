@@ -1,0 +1,33 @@
+{
+  "features": [
+    "lag_1h",
+    "lag_168h",
+    "lag_24h",
+    "hora_del_dia",
+    "hora_del_dia_cos",
+    "media_movil_12h",
+    "media_movil_24h",
+    "media_movil_6h",
+    "hora_del_dia_sin",
+    "lag_48h",
+    "price",
+    "std_movil_24h",
+    "std_movil_12h",
+    "std_movil_6h",
+    "media_movil_168h",
+    "es_hora_pico_tarde",
+    "mes",
+    "es_hora_pico_ma\u00f1ana",
+    "media_movil_48h",
+    "dia_semana",
+    "dia_semana_sin",
+    "mes_cos",
+    "std_movil_48h",
+    "std_movil_168h",
+    "es_finde",
+    "mes_sin",
+    "dia_semana_cos",
+    "es_festivo",
+    "a\u00f1o"
+  ]
+}

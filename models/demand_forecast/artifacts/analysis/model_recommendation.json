@@ -1,0 +1,45 @@
+{
+  "modelo_recomendado": "XGBoost (Test)",
+  "tipo": "tree_based",
+  "metricas": {
+    "mae": 217.83454665813184,
+    "rmse": 290.08027228610257,
+    "mape": 0.7246595256498771,
+    "r2": 0.9942229789698128,
+    "tiempo_entrenamiento": 0.6431806087493896
+  },
+  "best_model": "XGBoost (Test)",
+  "model_file": "tree_models_best_pipeline.pkl",
+  "metrics": {
+    "mae": 217.83454665813184,
+    "rmse": 290.08027228610257,
+    "mape": 0.7246595256498771,
+    "r2": 0.9942229789698128
+  },
+  "score_combinado": 1.0,
+  "comparacion_enfoques": {
+    "tree_based_manual": {
+      "modelo": "XGBoost (Test)",
+      "mae": 217.83454665813184,
+      "rmse": 290.08027228610257,
+      "mape": 0.7246595256498771,
+      "r2": 0.9942229789698128
+    },
+    "tree_based_optuna": {
+      "modelo": "CatBoost (Optuna)",
+      "mae": 249.6239348129487,
+      "rmse": 324.5111152568333,
+      "mape": 0.8441796916230933,
+      "r2": 0.99
+    },
+    "neural_networks": {
+      "modelo": "MLP (Test)",
+      "mae": 271.2072918415603,
+      "rmse": 352.15633864840424,
+      "mape": 0.9003636557432717,
+      "r2": 0.991485903279108
+    }
+  },
+  "razon": "Mejor balance entre precisi\u00f3n (MAE m\u00e1s bajo) y velocidad de entrenamiento",
+  "fecha_evaluacion": "2025-11-01 19:16:14"
+}

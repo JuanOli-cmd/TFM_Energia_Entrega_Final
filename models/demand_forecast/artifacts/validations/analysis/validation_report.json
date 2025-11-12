@@ -1,0 +1,46 @@
+{
+  "fecha_validacion": "2025-11-01 19:28:43",
+  "periodo_validacion": {
+    "inicio": "2025-09-21 00:00:00",
+    "fin": "2025-10-21 23:00:00",
+    "dias": 30,
+    "n_registros": 744
+  },
+  "modelo": "XGBoost (Test)",
+  "tipo": "tree_based",
+  "algoritmo": "RandomForestRegressor",
+  "fecha_entrenamiento": "2025-11-01 19:16:15",
+  "n_samples_train": 23640,
+  "metricas_train_completo": {
+    "mae": 256.86568310699874,
+    "rmse": 360.43935433183947,
+    "mape": 0.9059174593501766,
+    "r2": 0.993602413450565
+  },
+  "metricas_validacion": {
+    "mae": 270.3927293640501,
+    "rmse": 358.6166950409369,
+    "mape": 0.9942320888713732,
+    "r2": 0.990163709622257
+  },
+  "degradacion": {
+    "mae_diff_pct": 5.266194414695955,
+    "rmse_diff_pct": -0.5056771046217428,
+    "mape_diff_pct": 9.748639747438519,
+    "r2_diff_pct": -0.3460844882981061,
+    "degradation_score": 5.173503755585405
+  },
+  "analisis_errores": {
+    "sesgo": -102.91704949303093,
+    "error_std": 343.53167959554094,
+    "error_max": 1213.2088448088434,
+    "error_min": -1224.660886487709,
+    "outliers": 10,
+    "outliers_pct": 1.3440860215053763
+  },
+  "recomendacion": {
+    "estado": "BUENO",
+    "accion": "Monitoreo continuo",
+    "prioridad": "Baja"
+  }
+}

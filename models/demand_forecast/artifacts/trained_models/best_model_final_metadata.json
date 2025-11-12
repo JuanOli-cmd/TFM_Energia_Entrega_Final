@@ -1,0 +1,54 @@
+{
+  "tipo": "tree_based",
+  "modelo": "XGBoost (Test)",
+  "algoritmo": "RandomForestRegressor",
+  "n_samples": 23640,
+  "n_features": 29,
+  "fecha_entrenamiento": "2025-11-01 19:16:15",
+  "datos_entrenamiento": {
+    "fecha_inicio": "2023-01-01 00:00:00",
+    "fecha_fin": "2025-09-20 23:00:00",
+    "n_registros": 23640
+  },
+  "metricas_train_completo": {
+    "mae": 256.86568310699874,
+    "rmse": 360.43935433183947,
+    "mape": 0.9059174593501766,
+    "r2": 0.993602413450565
+  },
+  "features": [
+    "lag_1h",
+    "lag_168h",
+    "lag_24h",
+    "hora_del_dia",
+    "hora_del_dia_cos",
+    "media_movil_12h",
+    "media_movil_24h",
+    "media_movil_6h",
+    "hora_del_dia_sin",
+    "lag_48h",
+    "price",
+    "std_movil_24h",
+    "std_movil_12h",
+    "std_movil_6h",
+    "media_movil_168h",
+    "es_hora_pico_tarde",
+    "mes",
+    "es_hora_pico_ma\u00f1ana",
+    "media_movil_48h",
+    "dia_semana",
+    "dia_semana_sin",
+    "mes_cos",
+    "std_movil_48h",
+    "std_movil_168h",
+    "es_finde",
+    "mes_sin",
+    "dia_semana_cos",
+    "es_festivo",
+    "a\u00f1o"
+  ],
+  "rutas": {
+    "artifacts": "artifacts/trained_models/best_model_final.pkl",
+    "produccion": "../../app/models/demanda.pkl"
+  }
+}
