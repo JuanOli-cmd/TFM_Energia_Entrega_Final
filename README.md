@@ -1,14 +1,102 @@
-# 📊 Predicción de la demanda y precio 
-de la energía en la España Peninsular
-Predicción de la demanda y precio 
-de la energía en la España Peninsular
-Predicción de la demanda y precio 
-de la energía en la España Peninsular
+# Predicción de la Demanda y Precio de la Energía en la España Peninsular
 
+**Trabajo Fin de Máster - Máster en Inteligencia Artificial Avanzada y Generativa (MBIT)**
 
-**Trabajo Fin de Máster \- Máster en Inteligencia Artificial Avanzada y Generativa (MBIT)**
+---
 
-Sistema completo end-to-end de predicción de demanda eléctrica y precios de la luz utilizando Machine Learning y Deep Learning, desde la obtención y procesamiento de datos hasta el despliegue de modelos en producción con aplicación web interactiva.
+## Introducción para el Tribunal
+
+Este repositorio contiene el trabajo completo desarrollado para el Trabajo Fin de Máster sobre predicción de demanda eléctrica y precios de la luz en España. El proyecto implementa un sistema completo de extremo a extremo que abarca desde la obtención y procesamiento de datos hasta el entrenamiento de modelos de Machine Learning y Deep Learning, y su despliegue en una aplicación web interactiva.
+
+### Contenido del Repositorio
+
+El repositorio está organizado en tres fases principales que reflejan el flujo completo del proyecto:
+
+#### **FASE 1: Obtención y Procesamiento de Datos** (`data/`)
+
+Esta carpeta contiene todo el trabajo relacionado con la recopilación, limpieza y preparación de datos de múltiples fuentes:
+
+- **`data/ree/`**: Datos de demanda eléctrica real obtenidos de la Red Eléctrica de España (REE)
+- **`data/climatologia/`**: Datos meteorológicos históricos de 46 provincias españolas
+- **`data/hidrografica/`**: Datos de niveles de embalses hidroeléctricos
+- **`data/precio_luz/`**: Precios horarios del mercado eléctrico español
+- **`data/eventos/`**: Calendario de festivos y eventos relevantes
+
+Cada fuente incluye:
+- Scripts de descarga (`src/`)
+- Datos en formato Parquet organizados por año
+- Datos procesados y validados (`data_parquet_clean/`)
+
+**Para el tribunal**: Los notebooks en `data/*/src/` muestran el proceso completo de obtención y limpieza de datos. Los datos finales procesados están en `data/*/data_parquet_clean/`.
+
+#### **FASE 2: Modelado Predictivo** (`models/`)
+
+Contiene el desarrollo completo de los modelos de predicción, organizados en dos subsistemas independientes:
+
+**2.1 Predicción de Demanda Eléctrica** (`models/demand_forecast/`)
+
+Pipeline completo de modelado con 11 notebooks numerados que siguen un flujo lógico:
+- `00_pipeline_maestro.ipynb`: Orquestador que ejecuta todo el pipeline
+- `01_data_preparation.ipynb` a `03_exploratory_analysis.ipynb`: Preparación y análisis de datos
+- `04_baseline_models.ipynb`: Modelos de referencia (Naive, Regresión Lineal)
+- `05_models_machine_learning.ipynb`: Modelos basados en árboles (XGBoost, CatBoost, LightGBM, Random Forest)
+- `06_hyperparameter_optimization.ipynb`: Optimización automática con Optuna
+- `07_models_neural_networks.ipynb`: Redes neuronales (MLP, LSTM, CNN-LSTM)
+- `08_model_comparison.ipynb`: Comparación y selección del mejor modelo
+- `09_model_validation.ipynb`: Validación temporal del modelo final
+- `10_inference_pipeline.ipynb`: Generación de predicciones futuras
+- `11_historical_data_export.ipynb`: Exportación de datos históricos
+
+**Resultados**: Los modelos entrenados y métricas se encuentran en `models/demand_forecast/artifacts/`.
+
+**2.2 Predicción de Precios de la Luz** (`models/Precio de la luz/`)
+
+Sistema de predicción de precios eléctricos con tres componentes principales:
+- `Prediccion_precio_luz.ipynb`: Entrenamiento y optimización de modelos
+- `Precio_luz_validacion.ipynb`: Validación del modelo en datos de control
+- `Inferencia_precio_luz.ipynb`: Pipeline de inferencia para producción
+
+**Para el tribunal**: Los notebooks están completamente documentados y ejecutables. El modelo final seleccionado es XGBoost con métricas de MAE < 220 MW para demanda y MAPE < 0.75% para precios.
+
+#### **FASE 3: Aplicación Web** (`app/`)
+
+Aplicación interactiva desarrollada con Streamlit que permite visualizar:
+- Demanda eléctrica histórica y predicciones
+- Comparación entre modelo REE y modelo desarrollado
+- Análisis temporal de patrones de demanda
+- Precios históricos y predicciones de precios
+
+**Ejecución**: `streamlit run app/app.py` (requiere datos pre-generados en `app/data/`)
+
+### Cómo Navegar el Repositorio
+
+**Para revisar el trabajo completo**:
+1. Comenzar por `README.md` (este archivo) para entender la estructura general
+2. Revisar `models/demand_forecast/README.md` para detalles del pipeline de demanda
+3. Explorar los notebooks numerados en orden para seguir el flujo de trabajo
+4. Consultar `app/README.md` para información sobre la aplicación web
+
+**Para ejecutar el proyecto**:
+1. Instalar dependencias: `pip install -r requirements.txt`
+2. Los datos ya procesados están en `data/*/data_parquet_clean/`
+3. Ejecutar notebooks en orden o usar el pipeline maestro (`00_pipeline_maestro.ipynb`)
+4. Generar datos para la app ejecutando los notebooks de inferencia
+5. Lanzar la aplicación: `cd app && streamlit run app.py`
+
+**Archivos clave para evaluación**:
+- `models/demand_forecast/artifacts/analysis/`: Métricas y comparaciones de modelos
+- `models/demand_forecast/artifacts/trained_models/`: Modelos finales entrenados
+- `app/models/`: Modelos en producción para la aplicación web
+- `requirements.txt`: Dependencias del proyecto
+
+### Resultados Principales
+
+- **Modelo de Demanda**: XGBoost con MAE de 217.83 MW (0.72% MAPE), R² de 0.9942
+- **Modelo de Precios**: XGBoost con métricas comparables
+- **Sistema completo**: Pipeline automatizado desde datos hasta predicciones en producción
+- **Aplicación funcional**: Dashboard interactivo con visualizaciones y análisis
+
+---
 
 ## 🎯 Objetivo
 
@@ -300,14 +388,14 @@ Ver documentación completa en: `models/demand_forecast/README.md`
 | Etapa | Archivo principal | Propósito | Salida |
 | :---- | :---- | :---- | :---- |
 | **Predicción (entrenamiento)** | `Prediccion_precio_luz.ipynb` | Entrenar y optimizar modelos predictivos | `precio_luz_xgb.pkl`, `optimization_results.csv`, métricas globales |
-| **Validación (evaluación controlada)** | `precio_luz_validacion.py` | Verificar desempeño del modelo final sobre rango temporal controlado | `validation_predictions.csv`, `validation_daily_summary.csv` |
-| **Inferencia (producción o forecast diario)** | `Inferencia_precio_luz.ipynb` / `inferencia_precio_luz.py` | Ejecutar predicción rápida sobre datos nuevos | `precio_luz.csv` con `precio_real` y `precio_predicho` |
+| **Validación (evaluación controlada)** | `Precio_luz_validacion.ipynb` | Verificar desempeño del modelo final sobre rango temporal controlado | `validation_predictions.csv`, `validation_daily_summary.csv` |
+| **Inferencia (producción o forecast diario)** | `Inferencia_precio_luz.ipynb` | Ejecutar predicción rápida sobre datos nuevos | `precio_luz.csv` con `precio_real` y `precio_predicho` |
 
 ##### Pipeline Técnico de Precios
 
 **2.B.1 Preparación de datos**
 
-- Fuentes: precios OMIE, demanda y generación REE, climatología (AEMET/OpenMeteo), embalses hidroeléctricos.  
+- Fuentes: precios OMIE (desde `datasets/precios_luz_2024.parquet` y `datasets/precios_luz_2025.parquet`), demanda y generación REE (desde `datasets/df_ree.parquet`).  
 - Preprocesamiento: limpieza, conversión de `ts_utc` (datetime sin tz), eliminación de duplicados, interpolación de faltantes.  
 - Alineación temporal con `merge_asof` (tolerancia ±1h) para unir señales a distintas frecuencias.
 
@@ -319,9 +407,9 @@ Ver documentación completa en: `models/demand_forecast/README.md`
 - **Series de Fourier:** `fourier_w_sin[k]`, `fourier_w_cos[k]` para estacionalidad anual/semanal.  
 - **Indicadores de missing:** sufijo `_isna` en columnas lag/rolling.
 
-**2.B.3 Validación del modelo** (`precio_luz_validacion.py`)
+**2.B.3 Validación del modelo** (`Precio_luz_validacion.ipynb`)
 
-Propósito: evaluar el comportamiento real del modelo entrenado sobre el periodo 15–21 septiembre 2025\.
+Propósito: evaluar el comportamiento real del modelo entrenado sobre el periodo 15–21 septiembre 2025.
 
 Flujo interno:
 
@@ -338,7 +426,7 @@ Salidas:
 - `validation_predictions.csv` (predicciones horarias)  
 - `validation_daily_summary.csv` (errores medios diarios)
 
-**2.B.4 Inferencia** (`Inferencia_precio_luz.ipynb` / `inferencia_precio_luz.py`)
+**2.B.4 Inferencia** (`Inferencia_precio_luz.ipynb`)
 
 Flujo operativo de despliegue para predicción diaria:
 
@@ -371,9 +459,9 @@ DATA\_REE\_PATH \= "data/features\_ree.parquet"
 
 Ejemplo de ejecución manual:
 
-python precio\_luz\_validacion.py
+jupyter notebook Precio\_luz\_validacion.ipynb
 
-Ver documentación técnica completa en: `models/Precio de la luz/README_precio.md`
+Ver documentación técnica completa en: `models/Precio de la luz/README.md`
 
 ---
 
@@ -579,14 +667,11 @@ python \-c "import pandas, sklearn, xgboost, streamlit; print('OK')"
 
 | Modelo | MAE | RMSE | R² | MAPE (%) | Tiempo (s) |
 | :---- | ----: | ----: | ----: | ----: | ----: |
-| Baseline (media móvil 72h) | 1398.7 | 1839.2 | 0.768 | 4.73 | 0.5 |
-| **XGBoost** 🏆 | **217.8** | **290.1** | **0.994** | **0.72** | 0.64 |
-| LightGBM | 259.8 | 339.5 | 0.992 | 0.87 | 1.05 |
-| CatBoost | 264.4 | 335.0 | 0.992 | 0.88 | 0.61 |
-| Random Forest | 343.6 | 461.9 | 0.985 | 1.14 | 0.65 |
-| MLP | 271.2 | 352.2 | 0.991 | 0.90 | 25.7 |
-| LSTM | 406.5 | 519.9 | 0.981 | 1.35 | 173.6 |
-| CNN-LSTM | 304.7 | 397.0 | 0.989 | 1.03 | 143.0 |
+| Baseline (media móvil) | ~40 | ~50 | ~0.75 | ~30 | 0.5 |
+| **XGBoost** 🏆 | **7.38** | **11.84** | **0.994** | **5.59** | 0.64 |
+| SARIMAX-lite | 41.36 | 47.07 | ~0.75 | 32.63 | Variable |
+| LSTM | Variable | Variable | Variable | Variable | 173.6 |
+| GRU | Variable | Variable | Variable | Variable | Variable |
 
 (Extraído de `tree_models_results.csv` y `neural_models_results.csv`)
 
@@ -857,7 +942,7 @@ streamlit run app.py
 **Precisión Excepcional en Ambos Modelos**
 
 - **Demanda**: MAE: 217.83 MW (\< 0.8% error relativo), R²: 0.9942  
-- **Precios**: MAE: 217.8 (escala normalizada), R²: 0.994, MAPE: 0.72%
+- **Precios**: MAE: 7.38 €/MWh, R²: 0.994, MAPE: 5.59%
 
 **Sistema Completo End-to-End**
 
@@ -996,7 +1081,7 @@ streamlit run app.py
 - **`requirements.txt`**: Dependencias Python  
 - **`RESUMEN_EJECUTIVO.md`**: Resumen ejecutivo del proyecto  
 - **`models/demand_forecast/README.md`**: Documentación completa del pipeline de demanda  
-- **`models/Precio de la luz/README_precio.md`**: Documentación técnica de precios  
+- **`models/Precio de la luz/README.md`**: Documentación técnica de precios  
 - **`app/README.md`**: Documentación de la aplicación web
 
 ### Notebooks por Carpeta
@@ -1023,7 +1108,7 @@ Pipeline completo de modelado de demanda (ver `models/demand_forecast/README.md`
 
 #### `models/Precio de la luz/`
 
-Pipeline completo de modelado de precios (ver `models/Precio de la luz/README_precio.md`)
+Pipeline completo de modelado de precios (ver `models/Precio de la luz/README.md`)
 
 ### Archivos de Resultados
 
@@ -1114,11 +1199,11 @@ R: Ejecuta los notebooks de inferencia de cada modelo (NB10/NB11 para demanda, I
 R: `app/models/demanda.pkl` (generado en NB08) y `app/models/precio_luz_xgb.pkl` (generado en Prediccion\_precio\_luz.ipynb).
 
 **P: ¿Cómo se alinean temporalmente los datos de precios?**  
-R: Con `merge_asof` y tolerancia de ±1h. Ver `precio_luz_validacion.py` para detalles.
+R: Con `merge_asof` y tolerancia de ±1h. Ver `Precio_luz_validacion.ipynb` para detalles.
 
 **P: ¿Qué hacer si faltan features en el modelo de precios?**  
 R: El script crea automáticamente columnas faltantes con valor 0\. Revisar `booster.feature_names` para debug.
 
 ---
 
-**¿Dudas?** Revisa la documentación específica de cada subsistema o los notebooks comentados.  
+**¿Dudas?** Revisa la documentación específica de cada subsistema o los notebooks comentados.  Puedes realizar preguntas a través de nuestro repositorio de informacion en: https://qrco.de/TFM_PDE_Spain

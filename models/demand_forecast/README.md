@@ -6,23 +6,29 @@ Este directorio contiene el desarrollo completo de un modelo de Machine Learning
 
 demand\_forecast/
 
+├── 00\_pipeline\_maestro.ipynb          \# Orquestador completo del pipeline
+
 ├── 01\_data\_preparation.ipynb          \# Preparación y limpieza de datos
 
 ├── 02\_feature\_engineering.ipynb       \# Creación de features
 
-├── 03\_baseline\_models.ipynb           \# Modelos baseline de referencia
+├── 03\_exploratory\_analysis.ipynb      \# Análisis exploratorio de datos
 
-├── 04\_exploratory\_analysis.ipynb      \# Análisis exploratorio de datos
+├── 04\_baseline\_models.ipynb           \# Modelos baseline de referencia
 
-├── 05\_advanced\_models\_tree\_based.ipynb    \# Modelos basados en árboles
+├── 05\_models\_machine\_learning.ipynb   \# Modelos basados en árboles
 
-├── 06\_mejorado\_advanced\_models\_neural\_networks.ipynb  \# Redes neuronales
+├── 06\_hyperparameter\_optimization.ipynb \# Optimización automática con Optuna
 
-├── 07\_model\_comparison.ipynb          \# Comparación de modelos
+├── 07\_models\_neural\_networks.ipynb    \# Redes neuronales
 
-├── 08\_model\_validation.ipynb          \# Validación final
+├── 08\_model\_comparison.ipynb          \# Comparación de modelos
+
+├── 09\_model\_validation.ipynb           \# Validación temporal
 
 ├── 10\_inference\_pipeline.ipynb        \# Pipeline de inferencia (predicciones)
+
+├── 10\_production\_validation.ipynb     \# Validación en producción
 
 ├── 11\_historical\_data\_export.ipynb    \# Exportación de datos históricos
 
@@ -85,7 +91,17 @@ demand\_forecast/
 
 - `df_features_completo.parquet`: Dataset con todas las features
 
-### 3\. Modelos Baseline (NB03)
+### 3\. Análisis Exploratorio (NB03)
+
+**Análisis realizados**:
+
+- Patrones temporales (estacionalidad, tendencias)  
+- Correlaciones entre features  
+- Distribuciones de variables  
+- Detección de outliers  
+- Análisis de festivos vs laborales
+
+### 4\. Modelos Baseline (NB04)
 
 **Objetivo**: Establecer líneas base de comparación.
 
@@ -102,16 +118,6 @@ demand\_forecast/
 - MAPE (Mean Absolute Percentage Error)  
 - R² Score
 
-### 4\. Análisis Exploratorio (NB04)
-
-**Análisis realizados**:
-
-- Patrones temporales (estacionalidad, tendencias)  
-- Correlaciones entre features  
-- Distribuciones de variables  
-- Detección de outliers  
-- Análisis de festivos vs laborales
-
 ### 5\. Modelos Avanzados \- Árboles (NB05)
 
 **Modelos entrenados**:
@@ -127,23 +133,39 @@ demand\_forecast/
 - Feature importance analysis  
 - Early stopping para evitar overfitting
 
-### 6\. Modelos Avanzados \- Redes Neuronales (NB06)
+### 6\. Optimización de Hiperparámetros (NB06)
+
+**Objetivo**: Optimización automática de hiperparámetros con Optuna.
+
+**Modelos optimizados**:
+
+- XGBoost
+- CatBoost
+- LightGBM
+- Random Forest
+
+**Técnicas**:
+
+- Búsqueda bayesiana de hiperparámetros
+- Validación cruzada temporal
+- Early stopping para evitar sobreentrenamiento
+
+### 7\. Modelos Avanzados \- Redes Neuronales (NB07)
 
 **Arquitecturas exploradas**:
 
 1. **MLP (Multilayer Perceptron)**: Red neuronal feedforward  
 2. **LSTM**: Red recurrente para series temporales  
-3. **GRU**: Alternativa más eficiente a LSTM  
-4. **CNN-LSTM**: Combinación de convolucionales y recurrentes
+3. **CNN-LSTM**: Combinación de convolucionales y recurrentes
 
 **Técnicas**:
 
 - Normalización de features  
 - Dropout para regularización  
 - Early stopping y reducción de learning rate  
-- Secuencias temporales para LSTM/GRU
+- Secuencias temporales para LSTM
 
-### 7\. Comparación de Modelos (NB08)
+### 8\. Comparación de Modelos (NB08)
 
 **Evaluación**:
 
@@ -155,8 +177,6 @@ demand\_forecast/
 
 **Resultado**: XGBoost seleccionado como modelo final (MAE: 217.83 MW, MAPE: 0.72%, R²: 0.9942)
 
-### 8\. Reentrenamiento y Guardado (NB08)
-
 **Reentrenamiento con todos los datos**:
 
 - Usa train \+ test combinados para maximizar información  
@@ -166,31 +186,18 @@ demand\_forecast/
 **Guardado del modelo**:
 
 - Serialización del pipeline completo con `joblib`  
-- Guardado en `../../app/modelos/demanda.pkl`  
+- Guardado en `../../app/models/demanda.pkl`  
 - Incluye preprocesamiento y modelo en un solo objeto
 
-### 9\. Inferencia \- Datos Históricos (NB11)
+### 9\. Validación Temporal (NB09)
 
-**Objetivo**: Exportar datos históricos para la aplicación.
+**Objetivo**: Validar el modelo final en datos futuros.
 
 **Proceso**:
 
-1. Carga de datos desde `data_parquet_clean`  
-2. Estandarización a frecuencia horaria  
-3. Integración de fuentes  
-4. Formato de salida estandarizado  
-5. Guardado en `../../app/datos/demanda.csv`
-
-**Período**: 2023-01-01 a 2025-09-20
-
-**Campos de salida**:
-
-- `dia`: Fecha  
-- `hora`: Hora del día (0-23)  
-- `datetime`: Timestamp completo  
-- `demanda_real`: Demanda real de REE  
-- `demanda_prevista_ree`: Previsión oficial de REE  
-- `demanda_prevista_modelo`: Vacío (sin predicciones en histórico)
+- Validación en conjunto de datos temporal separado
+- Análisis de rendimiento a lo largo del tiempo
+- Identificación de períodos con mayor error
 
 ### 10\. Inferencia \- Predicciones (NB10)
 
@@ -204,7 +211,7 @@ demand\_forecast/
 4. Feature engineering completo (idéntico a entrenamiento)  
 5. Cálculo de lags y medias móviles  
 6. Predicción con modelo entrenado  
-7. Guardado añadiendo a `../../app/datos/demanda.csv`
+7. Guardado añadiendo a `../../app/data/demanda.csv`
 
 **Período**: Configurable (por defecto 2025-09-21 a 2025-10-21)
 
@@ -214,6 +221,39 @@ demand\_forecast/
 - Aplica exactamente las mismas transformaciones que NB02  
 - Añade predicciones al archivo existente sin borrar histórico  
 - Elimina duplicados manteniendo la versión más reciente
+
+### 11\. Validación en Producción (NB10 - production_validation)
+
+**Objetivo**: Validar el modelo con datos actuales de producción.
+
+**Proceso**:
+
+- Carga de datos más recientes disponibles
+- Comparación con predicciones del modelo
+- Análisis de rendimiento en condiciones reales
+
+### 12\. Inferencia \- Datos Históricos (NB11)
+
+**Objetivo**: Exportar datos históricos para la aplicación.
+
+**Proceso**:
+
+1. Carga de datos desde `data_parquet_clean`  
+2. Estandarización a frecuencia horaria  
+3. Integración de fuentes  
+4. Formato de salida estandarizado  
+5. Guardado en `../../app/data/demanda.csv`
+
+**Período**: 2023-01-01 a 2025-09-20
+
+**Campos de salida**:
+
+- `dia`: Fecha  
+- `hora`: Hora del día (0-23)  
+- `datetime`: Timestamp completo  
+- `demanda_real`: Demanda real de REE  
+- `demanda_prevista_ree`: Previsión oficial de REE  
+- `demanda_prevista_modelo`: Vacío (sin predicciones en histórico)
 
 ## 📊 Datasets Utilizados
 
@@ -226,7 +266,7 @@ demand\_forecast/
 | Precios | `data/precio_luz/data_parquet_clean/precios_luz/` | 1 hora | 1 hora | price |
 | Embalses | `data/hidrografica/data_parquet_clean/embalses/` | 1 día | 1 hora (ffill) | nivel, capacidad |
 
-### Salida (app/datos/)
+### Salida (app/data/)
 
 | Archivo | Formato | Descripción | Actualización |
 | :---- | :---- | :---- | :---- |
@@ -409,7 +449,7 @@ Para calcular lags de 168h (7 días), necesitamos:
 
 ### Gestión del Archivo demanda.csv
 
-El archivo `app/datos/demanda.csv` es **acumulativo**:
+El archivo `app/data/demanda.csv` es **acumulativo**:
 
 1. NB11 crea/actualiza con histórico (2023-01-01 a 2025-09-20)  
 2. NB10 añade predicciones (2025-09-21 en adelante)  

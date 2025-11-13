@@ -77,8 +77,8 @@ Los datos se encuentran en el directorio `app/data/`:
   - `demanda_real`: Demanda real (MW)
   - `demanda_prevista_ree`: Previsión de REE (MW)
   - `demanda_prevista_modelo`: Previsión de nuestro modelo (MW)
-- **Período**: 2023-01-01 hasta 2025
-- **Registros**: ~746 registros de ejemplo
+- **Período histórico**: 2023-01-01 a 2025-09-20
+- **Predicciones desde**: 2025-09-21 en adelante
 - **Frecuencia**: Horaria
 - **Geografía**: España - Península
 

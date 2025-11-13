@@ -10,9 +10,10 @@ Este notebook constituye el **núcleo de modelado** del sistema predictivo. Impl
 
 ### 🧩 Estructura del notebook
 1. **Carga y preparación de datos**
-   - Lectura de datasets históricos 2024‑2025 en formato `.parquet` desde `datasets/datasets_clean/`.
+   - Lectura de datasets históricos 2024‑2025 en formato `.parquet` desde `data/precio_luz (1)/data_parquet_clean/precios_luz/` y datos REE.
    - Estandarización de nombres de columnas (`Día`, `Hora`, `Precio`, `Demanda`, etc.).
    - Conversión de tipos (`string` → `timestamp`) y creación de índices temporales.
+   - Alineación temporal con `merge_asof` para unir señales a distintas frecuencias.
 
 2. **Análisis exploratorio (EDA)**
    - Estadísticas descriptivas, correlaciones y patrones estacionales.
@@ -25,11 +26,14 @@ Este notebook constituye el **núcleo de modelado** del sistema predictivo. Impl
    - División en *train/validation/test*.
 
 4. **Modelado**
-   - Entrenamiento de modelos:
-     - **SARIMAX** — para captura de estacionalidad.
-     - **XGBoost / LightGBM** — para relaciones no lineales.
-     - **LSTM / GRU** — para dependencias secuenciales.
-   - Evaluación mediante MAE, RMSE, MAPE y R².
+   - Entrenamiento y comparación de múltiples modelos:
+     - **Baselines**: Naive, Seasonal Naive, Media Móvil
+     - **SARIMAX** — para captura de estacionalidad
+     - **XGBoost** — para relaciones no lineales (modelo final seleccionado)
+     - **LightGBM** — alternativa de gradient boosting
+     - **LSTM / GRU** — para dependencias secuenciales
+   - Evaluación mediante MAE, RMSE, MAPE y R²
+   - **Modelo final**: XGBoost (guardado como `precio_luz_xgb.pkl`)
 
 5. **Validación y visualización**
    - Comparación entre precios reales y predichos.
@@ -76,7 +80,8 @@ Este notebook cierra el ciclo del proyecto y se centra en la **validación integ
 ### 📊 Contenidos principales
 1. **Evaluación comparativa**
    - Revisión de métricas globales (MAE, RMSE, MAPE, R²).
-   - Comparación entre modelos (SARIMAX, XGBoost, LSTM).
+   - Comparación entre modelos entrenados (SARIMAX, XGBoost, LightGBM, LSTM, GRU).
+   - Validación del modelo final seleccionado (XGBoost) en período de control (15-21 septiembre 2025).
 
 2. **Análisis de errores**
    - Identificación de patrones de desviación.
